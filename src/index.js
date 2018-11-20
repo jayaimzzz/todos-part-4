@@ -4,14 +4,11 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Router, Route, Link, Switch } from 'react-router-dom'
-
+import TodoList from './compontents/TodoList'
 
 const routing = (
     <BrowserRouter>
-        {/* <Switch> */}
-            {/* <Route exact path="/active" render={props=> (<App></App>)}/> */}
-            <Route exact path={process.env.PUBLIC_URL + "/"} component={App}/>
-        {/* </Switch> */}
+        <App/>
     </BrowserRouter>
 )
 ReactDOM.render(routing, document.getElementById('root'));

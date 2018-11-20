@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./index.css";
 import todosList from "./todos.json";
 import TodoList from "./compontents/TodoList.js";
+import { NavLink, Switch, Route } from "react-router-dom";
+
 
 class App extends Component {
   state = {
@@ -69,28 +71,60 @@ class App extends Component {
             onKeyDown={this.keyHandling}
           />
         </header>
-        <TodoList
-          location={this.props.location.hash}
-          todos={this.state.todos}
+        <Switch>
+          <Route exact path={process.env.PUBLIC_URL + "/"} render={()=> <TodoList
+            todos={this.state.todos}
+            toggleCompleted={this.toggleCompleted}
+            deleteTodo={this.deleteTodo}
+            />}/>
+          <Route path={process.env.PUBLIC_URL + "/active"} render={()=> <TodoList 
+          todos={this.state.todos.filter(todo=>!todo.completed)}
           toggleCompleted={this.toggleCompleted}
           deleteTodo={this.deleteTodo}
-        />
+          />}/>
+          <Route path={process.env.PUBLIC_URL + "/completed"} render={()=> <TodoList
+          todos={this.state.todos.filter(todo=>todo.completed)}
+          toggleCompleted={this.toggleCompleted}
+          deleteTodo={this.deleteTodo}
+          />}/>
+        </Switch>
         <footer className="footer">
           <span className="todo-count">
-            <strong>{this.state.todos.filter(todo => !todo.completed).length}</strong> item(s) left
+            <strong>
+              {this.state.todos.filter(todo => !todo.completed).length}
+            </strong>{" "}
+            item(s) left
           </span>
           <ul className="filters">
             <li>
-              <a href="#/" className={this.props.location.hash === "#/" ? "selected":""}>All</a>
+              <NavLink
+                exact
+                to="/"
+                activeClassName="selected"
+              >
+                All
+              </NavLink>
             </li>
             <li>
-              <a href="#/active" className={this.props.location.hash === "#/active" ? "selected":""}>Active</a>
+              <NavLink
+                to="/active"
+                activeClassName="selected"
+              >
+                Active
+              </NavLink>
             </li>
             <li>
-              <a href="#/completed" className={this.props.location.hash === "#/completed" ? "selected":""}>Completed</a>
+              <NavLink
+                to="/completed"
+                activeClassName="selected"
+              >
+                Completed
+              </NavLink>
             </li>
           </ul>
-          <button className="clear-completed" onClick={this.clearCompleted}>Clear completed</button>
+          <button className="clear-completed" onClick={this.clearCompleted}>
+            Clear completed
+          </button>
         </footer>
       </section>
     );
