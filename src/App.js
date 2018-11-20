@@ -81,13 +81,13 @@ class App extends Component {
           </span>
           <ul className="filters">
             <li>
-              <a href="#/">All</a>
+              <a href="#/" className={this.props.location.hash === "#/" ? "selected":""}>All</a>
             </li>
             <li>
-              <a href="#/active">Active</a>
+              <a href="#/active" className={this.props.location.hash === "#/active" ? "selected":""}>Active</a>
             </li>
             <li>
-              <a href="#/completed">Completed</a>
+              <a href="#/completed" className={this.props.location.hash === "#/completed" ? "selected":""}>Completed</a>
             </li>
           </ul>
           <button className="clear-completed" onClick={this.clearCompleted}>Clear completed</button>

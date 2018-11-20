@@ -10,7 +10,7 @@ const routing = (
     <BrowserRouter>
         {/* <Switch> */}
             {/* <Route exact path="/active" render={props=> (<App></App>)}/> */}
-            <Route exact path="/" component={App}/>
+            <Route exact path={process.env.PUBLIC_URL + "/"} component={App}/>
         {/* </Switch> */}
     </BrowserRouter>
 )
