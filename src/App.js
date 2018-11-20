@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./index.css";
 import todosList from "./todos.json";
+import TodoList from "./compontents/TodoList.js";
 
 class App extends Component {
   state = {
@@ -69,57 +70,28 @@ class App extends Component {
           />
         </header>
         <TodoList
+          location={this.props.location.hash}
           todos={this.state.todos}
           toggleCompleted={this.toggleCompleted}
           deleteTodo={this.deleteTodo}
         />
         <footer className="footer">
           <span className="todo-count">
-            <strong>0</strong> item(s) left
+            <strong>{this.state.todos.filter(todo => !todo.completed).length}</strong> item(s) left
           </span>
-          <button className="clear-completed" onClick={this.clearCompleted}>
-            Clear completed
-          </button>
+          <ul className="filters">
+            <li>
+              <a href="#/">All</a>
+            </li>
+            <li>
+              <a href="#/active">Active</a>
+            </li>
+            <li>
+              <a href="#/completed">Completed</a>
+            </li>
+          </ul>
+          <button className="clear-completed" onClick={this.clearCompleted}>Clear completed</button>
         </footer>
-      </section>
-    );
-  }
-}
-
-class TodoItem extends Component {
-  render() {
-    return (
-      <li className={this.props.completed ? "completed" : ""}>
-        <div className="view">
-          <input
-            className="toggle"
-            type="checkbox"
-            defaultChecked={this.props.completed}
-            onClick={this.props.toggleCompleted}
-          />
-          <label>{this.props.title}</label>
-          <button className="destroy" onClick={this.props.deleteTodo} />
-        </div>
-      </li>
-    );
-  }
-}
-
-class TodoList extends Component {
-  render() {
-    return (
-      <section className="main">
-        <ul className="todo-list">
-          {this.props.todos.map(todo => (
-            <TodoItem
-              title={todo.title}
-              completed={todo.completed}
-              key={todo.id}
-              toggleCompleted={this.props.toggleCompleted(todo.id)}
-              deleteTodo={this.props.deleteTodo(todo.id)}
-            />
-          ))}
-        </ul>
       </section>
     );
   }
