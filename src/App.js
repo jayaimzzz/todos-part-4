@@ -3,6 +3,9 @@ import "./index.css";
 import todosList from "./todos.json";
 import TodoList from "./compontents/TodoList.js";
 import { NavLink, Switch, Route } from "react-router-dom";
+import { Provider, connect } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
+// import thunk from 'redux-thunk';
 
 
 class App extends Component {

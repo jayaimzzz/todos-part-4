@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
+import { toggleTodo, addTodo, deleteTodo, clearCompletedTodos, TOGGLE_TODO, ADD_TODO, DELETE_TODO, CLEAR_COMPLETED_TODOS } from '../actions.js';
+
+
 
 class TodoItem extends Component {
   render() {
@@ -19,6 +23,14 @@ class TodoItem extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return { todos: state.todos };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+      toggleCompleted: (todoID) => {dispatch(toggleTodo(todoID))},
+      deleteTodo: todoID => {dispatch(deleteTodo(todoID))}
+    }
+};
 
-
-export default TodoItem;
+export default connect(mapStateToProps, mapDispatchToProps)(TodoItem);
