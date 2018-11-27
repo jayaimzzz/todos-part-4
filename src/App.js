@@ -5,15 +5,17 @@ import TodoList from "./compontents/TodoList.js";
 import { NavLink, Switch, Route } from "react-router-dom";
 import { Provider, connect } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
+import { toggleTodo, addTodo, deleteTodo, clearCompletedTodos, TOGGLE_TODO, ADD_TODO, DELETE_TODO, CLEAR_COMPLETED_TODOS } from './actions.js';
+
 // import thunk from 'redux-thunk';
 
 
 class App extends Component {
-  state = {
-    todos: todosList,
-    search: "",
-    nextID: todosList.length + 1
-  };
+  // state = {
+  //   todos: todosList,
+  //   search: "",
+  //   nextID: todosList.length + 1
+  // };
 
   toggleCompleted = todosId => event => {
     let index = this.state.todos.findIndex(todo => todo.id === todosId);
@@ -134,4 +136,16 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return { todos: state.todos };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+      toggleCompleted: (todoID) => {dispatch(toggleTodo(todoID))},
+      deleteTodo: todoID => {dispatch(deleteTodo(todoID))},
+      clearCompleted: () => {dispatch(clearCompletedTodos())},
+      keyHandling: (todo) => {dispatch(addTodo(todo))}
+    }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);

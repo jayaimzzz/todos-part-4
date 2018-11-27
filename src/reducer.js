@@ -2,12 +2,12 @@ import { toggleTodo, addTodo, deleteTodo, clearCompletedTodos, TOGGLE_TODO, ADD_
 import todosList from './todos.json';
 
 
-const state = {
+const initState = {
     todos: todosList,
     search: "",
     nextID: todosList.length + 1
   }
-export const reducer = (state, action) => {
+export const reducer = (state = initState, action) => {
     switch (action.type){
         case TOGGLE_TODO:
         const index = state.todos.findIndex(todo => todo.id === action.payload);
