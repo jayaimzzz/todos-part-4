@@ -1,35 +1,35 @@
 import React, { Component } from "react";
 import "./index.css";
-import todosList from "./todos.json";
+// import todosList from "./todos.json";
 import TodoList from "./compontents/TodoList.js";
 import { NavLink, Switch, Route } from "react-router-dom";
-import { Provider, connect } from 'react-redux';
-import { createStore, combineReducers } from 'redux';
-import { toggleTodo, addTodo, deleteTodo, clearCompletedTodos, TOGGLE_TODO, ADD_TODO, DELETE_TODO, CLEAR_COMPLETED_TODOS } from './actions.js';
+import { connect } from 'react-redux';
+// import { createStore, combineReducers } from 'redux';
+import { addTodo, clearCompletedTodos } from './actions.js';
 
 // import thunk from 'redux-thunk';
 
 
 class App extends Component {
-  // state = {
-  //   todos: todosList,
-  //   search: "",
-  //   nextID: todosList.length + 1
+  state = {
+    // todos: todosList,
+    search: "",
+    // nextID: todosList.length + 1
+  };
+
+  // toggleCompleted = todosId => event => {
+  //   let index = this.state.todos.findIndex(todo => todo.id === todosId);
+  //   let newTodoList = this.state.todos.slice();
+  //   newTodoList[index].completed = !newTodoList[index].completed;
+  //   this.setState({ todos: newTodoList });
   // };
 
-  toggleCompleted = todosId => event => {
-    let index = this.state.todos.findIndex(todo => todo.id === todosId);
-    let newTodoList = this.state.todos.slice();
-    newTodoList[index].completed = !newTodoList[index].completed;
-    this.setState({ todos: newTodoList });
-  };
-
-  deleteTodo = todosId => event => {
-    let index = this.state.todos.findIndex(todo => todo.id === todosId);
-    let newTodoList = this.state.todos.slice();
-    newTodoList.splice(index, 1);
-    this.setState({ todos: newTodoList });
-  };
+  // deleteTodo = todosId => event => {
+  //   let index = this.state.todos.findIndex(todo => todo.id === todosId);
+  //   let newTodoList = this.state.todos.slice();
+  //   newTodoList.splice(index, 1);
+  //   this.setState({ todos: newTodoList });
+  // };
 
   handleLoadSearchResults = event => {
     this.setState({
@@ -37,27 +37,29 @@ class App extends Component {
     });
   };
 
-  clearCompleted = () => {
-    let newTodoList = this.state.todos.slice();
-    newTodoList = newTodoList.filter(todo => todo.completed === false);
-    this.setState({ todos: newTodoList });
-  };
+  // clearCompleted = () => {
+  //   let newTodoList = this.state.todos.slice();
+  //   newTodoList = newTodoList.filter(todo => todo.completed === false);
+  //   this.setState({ todos: newTodoList });
+  // };
 
   keyHandling = event => {
     if (event.keyCode === 13) {
-      const newTodo = {
-        userId: 1,
-        id: this.state.nextID,
-        title: this.state.search,
-        completed: false
-      };
-      const newTodoList = this.state.todos.slice();
-      newTodoList.push(newTodo);
-      this.setState(previousState => ({
-        todos: newTodoList,
-        search: "",
-        nextID: previousState.nextID + 1
-      }));
+      // const newTodo = {
+      //   userId: 1,
+      //   id: this.state.nextID,
+      //   title: this.state.search,
+      //   completed: false
+      // };
+      // const newTodoList = this.state.todos.slice();
+      // newTodoList.push(newTodo);
+      // this.setState(previousState => ({
+      //   todos: newTodoList,
+      //   search: "",
+      //   nextID: previousState.nextID + 1
+      // }));
+      this.props.addTodo(this.state.search);
+      this.state.search = "";
     }
   };
 
@@ -77,26 +79,17 @@ class App extends Component {
           />
         </header>
         <Switch>
-          <Route exact path={process.env.PUBLIC_URL + "/"} render={()=> <TodoList
-            todos={this.state.todos}
-            toggleCompleted={this.toggleCompleted}
-            deleteTodo={this.deleteTodo}
+          <Route exact path={process.env.PUBLIC_URL + "/"} render={()=> <TodoList path="all"
             />}/>
-          <Route path={process.env.PUBLIC_URL + "/active"} render={()=> <TodoList 
-          todos={this.state.todos.filter(todo=>!todo.completed)}
-          toggleCompleted={this.toggleCompleted}
-          deleteTodo={this.deleteTodo}
+          <Route path={process.env.PUBLIC_URL + "/active"} render={()=> <TodoList path="active"
           />}/>
-          <Route path={process.env.PUBLIC_URL + "/completed"} render={()=> <TodoList
-          todos={this.state.todos.filter(todo=>todo.completed)}
-          toggleCompleted={this.toggleCompleted}
-          deleteTodo={this.deleteTodo}
+          <Route path={process.env.PUBLIC_URL + "/completed"} render={()=> <TodoList path="completed"
           />}/>
         </Switch>
         <footer className="footer">
           <span className="todo-count">
             <strong>
-              {this.state.todos.filter(todo => !todo.completed).length}
+              {this.props.numberOfActiveTodos}
             </strong>{" "}
             item(s) left
           </span>
@@ -127,7 +120,7 @@ class App extends Component {
               </NavLink>
             </li>
           </ul>
-          <button className="clear-completed" onClick={this.clearCompleted}>
+          <button className="clear-completed" onClick={this.props.clearCompleted}>
             Clear completed
           </button>
         </footer>
@@ -137,14 +130,15 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { todos: state.todos };
+  return { numberOfActiveTodos: state.todos.filter(todo => !todo.completed).length };
 };
 const mapDispatchToProps = dispatch => {
   return {
-      toggleCompleted: (todoID) => {dispatch(toggleTodo(todoID))},
-      deleteTodo: todoID => {dispatch(deleteTodo(todoID))},
+      // toggleCompleted: (todoID) => {dispatch(toggleTodo(todoID))},
+      // deleteTodo: todoID => {dispatch(deleteTodo(todoID))},
       clearCompleted: () => {dispatch(clearCompletedTodos())},
-      keyHandling: (todo) => {dispatch(addTodo(todo))}
+      keyHandling: (todo) => {dispatch(addTodo(todo))},
+      addTodo: (todo) => {dispatch(addTodo(todo))}
     }
 };
 

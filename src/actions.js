@@ -1,6 +1,6 @@
-import React from 'react'
-import { Provider, connect } from 'react-redux'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+// import React from 'react'
+// import { Provider, connect } from 'react-redux'
+// import { createStore, combineReducers, applyMiddleware } from 'redux'
 // import thunk from 'redux-thunk'
 
 // import rootReducer from './redux/reducers'

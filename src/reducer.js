@@ -1,4 +1,4 @@
-import { toggleTodo, addTodo, deleteTodo, clearCompletedTodos, TOGGLE_TODO, ADD_TODO, DELETE_TODO, CLEAR_COMPLETED_TODOS } from './actions.js';
+import { TOGGLE_TODO, ADD_TODO, DELETE_TODO, CLEAR_COMPLETED_TODOS } from './actions.js';
 import todosList from './todos.json';
 
 
@@ -7,11 +7,13 @@ const initState = {
     search: "",
     nextID: todosList.length + 1
   }
+
 export const reducer = (state = initState, action) => {
+    console.log(action)
+    const index = state.todos.findIndex(todo => todo.id === action.payload);
+    let todos = state.todos.slice();
     switch (action.type){
         case TOGGLE_TODO:
-        const index = state.todos.findIndex(todo => todo.id === action.payload);
-        const todos = state.todos.slice();
         todos[index].completed = !todos[index].completed
         return {...state, todos};
         case ADD_TODO:
@@ -30,13 +32,10 @@ export const reducer = (state = initState, action) => {
             nextID
           }
         case DELETE_TODO:
-        // const todos = state.todos.slice();
-        // const index = todos.findIndex(todo => todo.id === action.payload);
         todos.splice(index,1);
         return {...state, todos};
         case CLEAR_COMPLETED_TODOS:
-        // const todos = state.todos.slice();
-        todos.filter(todo => todo.completed === false)
+        todos = todos.filter(todo => todo.completed === false)
         return {...state, todos};
         default: return state;
     }
