@@ -59,7 +59,7 @@ class App extends Component {
       //   nextID: previousState.nextID + 1
       // }));
       this.props.addTodo(this.state.search);
-      this.state.search = "";
+      this.setState({...this.state, search:""})
     }
   };
 

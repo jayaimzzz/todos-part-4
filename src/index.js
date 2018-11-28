@@ -13,6 +13,7 @@ const store = createStore(
     reducer, /* preloadedState, */
    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   );
+  console.log(process.env.PUBLIC_URL)
 const routing = (
   <BrowserRouter basename={process.env.PUBLIC_URL}>
     <Provider store={store}>
