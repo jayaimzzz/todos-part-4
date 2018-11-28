@@ -2,7 +2,7 @@
   "name": "todos",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://jayaimzzz.github.io/todos-part-3/",
+  "homepage": "http://jayaimzzz.github.io/todos-part-4/",
   "dependencies": {
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
