@@ -16,7 +16,7 @@ const store = createStore(
 const routing = (
   <BrowserRouter>
     <Provider store={store}>
-      <Route render={(props)=><App pathname={props.location.pathname}/>}/>
+      <Route render={(props)=><App pathname={process.env.PUBLIC_URL + props.location.pathname}/>}/>
     </Provider>
   </BrowserRouter>
 );
