@@ -79,11 +79,11 @@ class App extends Component {
           />
         </header>
         <Switch>
-          <Route exact path={process.env.PUBLIC_URL + "/"} render={()=> <TodoList path="all"
+          <Route exact path={"/"} render={()=> <TodoList path="all"
             />}/>
-          <Route path={process.env.PUBLIC_URL + "/active"} render={()=> <TodoList path="active"
+          <Route path={"/active"} render={()=> <TodoList path="active"
           />}/>
-          <Route path={process.env.PUBLIC_URL + "/completed"} render={()=> <TodoList path="completed"
+          <Route path={"/completed"} render={()=> <TodoList path="completed"
           />}/>
         </Switch>
         <footer className="footer">
