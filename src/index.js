@@ -14,9 +14,9 @@ const store = createStore(
    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   );
 const routing = (
-  <BrowserRouter>
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <Provider store={store}>
-      <Route render={(props)=><App pathname={process.env.PUBLIC_URL + props.location.pathname}/>}/>
+      <Route render={(props)=><App pathname={props.location.pathname}/>}/>
     </Provider>
   </BrowserRouter>
 );
